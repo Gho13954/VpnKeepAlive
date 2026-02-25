@@ -45,13 +45,18 @@ sc.exe start VpnKeepAlive
 ```json
 {
   "PingSettings": {
-    "TargetHost": "192.168.1.102",     // 目标 IP
+    "TargetHosts": [                    // 目标 IP 列表（支持多个）
+      "192.168.1.102",
+      "10.33.6.24"
+    ],
     "MinIntervalSeconds": 30,           // 最小间隔（秒）
     "MaxIntervalSeconds": 60,           // 最大间隔（秒）
     "TimeoutMilliseconds": 3000         // Ping 超时
   }
 }
 ```
+
+需要新增保活 IP 时，在 `TargetHosts` 数组中追加即可。每个周期内所有主机会被并发 Ping。
 
 修改配置后需重启服务生效：`sc.exe stop VpnKeepAlive && sc.exe start VpnKeepAlive`
 
